@@ -1,0 +1,78 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "0.115.12"
+uvicorn = "0.34.2"
+python-dotenv = "1.1.0"
+bcrypt = "4.3.0"
+pyjwt = "2.10.1"
+pydantic = "2.11.4"
+sqlalchemy = "2.0.40"
+pyodbc = "5.2.0"
+email-validator = "2.2.0"
+alembic = "1.15.2"
+sqlmodel = "0.0.24"
+pydantic-settings = "2.9.1"
+psycopg2-binary = "2.9.10"
+fastapi-pagination = "0.13.3"
+openpyxl = "3.1.5"
+pandas = "2.3.1"
+python-multipart = "0.0.20"
+azure-communication-email = "1.1.0"
+boto3 = "*"
+reportlab = "*"
+requests = "*"
+openai = "*"
+
+[dev-packages]
+pytest = "8.3.5"
+httpx = "0.28.1"
+pytest-cov = "5.0.0"
+pytest-asyncio = "0.25.3"
+bandit = "1.8.3"
+safety = "3.2.9"
+pre-commit = "4.3.0"
+black = "25.1.0"
+isort = "6.0.1"
+autoflake = "2.3.1"
+flake8 = "7.3.0"
+pylint = "3.3.8"
+pylint-pytest = "1.1.7"
+pytest-mock = "3.15.1"
+pylint-sqlalchemy = "*"
+pylint-pydantic = "*"
+lock = "*"
+
+[requires]
+python_version = "3.13"
+python_full_version = "3.13.3"
+
+[scripts]
+# ---- pre-commit / lint ----
+setup = "pre-commit install --install-hooks"
+precommit = "pre-commit run --all-files"
+precommit-update = "pre-commit autoupdate"
+lint = "flake8 && pylint -j 0 src"
+format = "isort . && black ."
+format-check = "isort --check-only . && black --check ."
+fix-unused = "autoflake -r src --in-place --remove-all-unused-imports --remove-unused-variables --expand-star-imports --ignore-init-module-imports"
+# ---- tests / coverage ----
+test = "pytest"
+coverage = "pytest --cov=src --cov-report=term-missing"
+coverage-html = "pytest --cov=src --cov-report=html"
+coverage-min = "pytest --cov=src/application/use_cases --cov=src/application/services --cov-report=term --cov-fail-under=90"
+coverage-sh = "./coverage.sh"
+# ---- app ----
+start = "uvicorn src.main:app --host 0.0.0.0 --port 8000"
+# ---- alembic / migraciones ----
+# Alias de alembic con el alembic.ini del proyecto (úsalo añadiendo args)
+alembic-ctx = "alembic -c src/infrastructure/config/migrations/alembic.ini"
+# Crear una nueva migración (añade el mensaje al final)
+makemigration = "alembic -c src/infrastructure/config/migrations/alembic.ini revision --autogenerate -m"
+# Aplicar migraciones a TODOS los tenants (script Python del repo)
+migrate-all = "python -m src.infrastructure.migrations.upgrade_migration"
+# Revertir la última migración en TODOS los tenants (script Python del repo)
+downgrade-all = "python -m src.infrastructure.migrations.downgrade_migration"

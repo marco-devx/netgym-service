@@ -1,0 +1,30 @@
+[MAIN]
+ignore = tests, env, venv, .venv
+load-plugins = pylint_pydantic
+ignore-paths =
+    ^src/infrastructure/migrations/.*$,
+    ^src/infrastructure/config/migrations/.*$
+
+init-hook="import sys, os; sys.path[:0] = [os.path.abspath('src'), os.path.abspath('.')]"
+
+[MESSAGES CONTROL]
+disable =
+    C0114,C0115,C0116,C0121,
+    C0103,
+    R0903,
+    C0301,
+    R0801,
+    W0237
+
+[DESIGN]
+max-args = 15
+max-attributes = 20
+max-locals = 25
+max-returns = 10
+
+[FORMAT]
+max-line-length = 120
+max-module-lines=1100
+
+[ARGUMENTS]
+max-positional-arguments = 15

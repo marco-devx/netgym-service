@@ -1,0 +1,87 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-toml
+      - id: mixed-line-ending
+        args: [ "--fix=lf" ]
+        files: '\.py$'
+
+  - repo: local
+    hooks:
+      - id: require-python-from-file
+        name: Require Python from .python-version
+        entry: python scripts/check_python_version.py
+        language: system
+        pass_filenames: false
+        stages: [ pre-commit ]
+
+      - id: autoflake-fix
+        name: autoflake (remove unused)
+        entry: autoflake
+        language: system
+        types: [ python ]
+        args:
+          - --in-place
+          - --remove-all-unused-imports
+          - --remove-unused-variables
+          - --expand-star-imports
+          - --ignore-init-module-imports
+        exclude: '(^|/)(migrations|alembic|versions)/'
+
+      - id: isort-fix
+        name: isort (sort imports)
+        entry: isort
+        language: system
+        types: [ python ]
+        args: [ "--profile","black" ]
+
+      - id: black-format
+        name: black (format)
+        entry: black
+        language: system
+        types: [ python ]
+
+      - id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        types: [ python ]
+        stages: [ pre-commit ]
+        exclude: '(^|/)(migrations|alembic|versions)/'
+
+      - id: pylint
+        name: pylint (changed files under src/)
+        entry: python -m pylint
+        language: system
+        types: [ python ]
+        stages: [ pre-commit ]
+        files: ^src/
+        exclude: >
+          (?x)^(
+            src/infrastructure/migrations/|
+            src/infrastructure/config/migrations/
+          )
+        args:
+          - "--rcfile=.pylintrc"
+          - "--init-hook=import sys,os; sys.path[:0]=[os.path.abspath('src'), os.path.abspath('.')]"
+          - "--persistent=no"
+          - "-j"
+          - "0"
+
+      - id: pylint-full
+        name: pylint (full repo on push)
+        entry: python -m pylint
+        language: system
+        pass_filenames: false
+        stages: [ pre-push ]
+        args:
+          - "--rcfile=.pylintrc"
+          - "--init-hook=import sys,os; sys.path[:0]=[os.path.abspath('src'), os.path.abspath('.')]"
+          - "--persistent=no"
+          - "-j"
+          - "0"
+          - "src"

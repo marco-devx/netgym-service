@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 2personnel-training-service
+  description: Servicio backend en .NET correspondiente al módulo LMS de la plataforma 2personnel.
+  tags:
+    - dotnet
+    - backend
+    - microservice
+    - 2personnel
+    - training
+  annotations:
+    github.com/project-slug: White-Lion-Technology/2personnel-training-service
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-readme-path: ./README.md
+    github.com/view-url: https://github.com/White-Lion-Technology/2personnel-training-service
+    github.com/releases-url: https://github.com/White-Lion-Technology/2personnel-training-service/releases
+spec:
+  type: service
+  lifecycle: production
+  owner: soporte@whiteliontechnology.com

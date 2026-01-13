@@ -1,0 +1,20 @@
+[flake8]
+max-line-length = 120
+exclude =
+    .git,
+    __pycache__,
+    env,
+    venv,
+    .venv,
+    build,
+    dist,
+    migrations,
+    src/infrastructure/migrations,
+    versions
+per-file-ignores =
+    __init__.py: F401, F403
+    src/infrastructure/config/migrations/env.py: F401
+    src/infrastructure/config/migrations/versions/: E501
+    src/infrastructure/repositories/resource_attempt_repository_impl.py:E712
+
+extend-ignore = E203, W503
