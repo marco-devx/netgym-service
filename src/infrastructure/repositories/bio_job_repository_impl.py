@@ -1,9 +1,9 @@
 from typing import Optional
 from sqlalchemy.orm import Session
 from src.domain.entities.bio_generation_job import BioGenerationJob
-from src.domain.value_objects.job_status import JobStatus
-from src.domain.ports.repositories.bio_job_repository import BioJobRepository
-from src.infrastructure.models.bio_job_model import BioJobModel
+from src.domain.value_objects import JobStatus
+from src.domain.ports.repositories import BioJobRepository
+from src.infrastructure.models import BioJobModel
 
 class BioJobRepositoryAdapter(BioJobRepository):
     def __init__(self, session: Session):

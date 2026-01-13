@@ -1,1 +1,1 @@
-from .handlers import register_exception_handlers
+from .handlers import register_exception_handlers, handle_db_exception

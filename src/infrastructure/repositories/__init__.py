@@ -1,1 +1,3 @@
-from .bio_job_repository import BioJobRepositoryAdapter
+from .bio_job_repository_impl import BioJobRepositoryAdapter
+from .player_repository_impl import PlayerRepositoryAdapter
+

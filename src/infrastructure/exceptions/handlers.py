@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse
 
 from src.shared.exceptions import (
     BaseballAPIException,
+    DatabaseException,
+    DBUniqueConstraintError,
 )
 
 
@@ -32,6 +34,8 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     exception_map = [
         (BaseballAPIException, 503, "External Service Error"),
+        (DBUniqueConstraintError, 409, "Resource already exists"),
+        (DatabaseException, 500, "Internal Database Error"),
     ]
 
     def _make_handler(http_status: int, message: str):
@@ -55,3 +59,18 @@ def register_exception_handlers(app: FastAPI) -> None:
         app.exception_handler(exc_cls)(
             _make_handler(http_status=status_code, message=generic_message)
         )
+
+
+def handle_db_exception(e: Exception, message: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=500,
+        content={
+            "success": False,
+            "message": message,
+            "status_code": 500,
+            "data": None,
+            "errors": {
+                "detail": str(e),
+            },
+        },
+    )

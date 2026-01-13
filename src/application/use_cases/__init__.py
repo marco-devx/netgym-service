@@ -2,3 +2,4 @@ from .get_players_use_case import GetPlayersUseCase
 from .generate_bio_use_case import GenerateBioUseCase
 from .get_bio_status_use_case import GetBioStatusUseCase
 from .process_bio_use_case import ProcessBioUseCase
+from .update_player_use_case import UpdatePlayerUseCase

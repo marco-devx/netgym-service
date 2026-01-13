@@ -13,8 +13,8 @@ def create_app() -> FastAPI:
     debug_mode = settings.app_env == "development"
 
     api = FastAPI(
-        title="LMS Owens API",
-        description="API para gestionar LMS de Owens.",
+        title="NetGym API",
+        description="NetGym API",
         version="1.0.0",
         debug=debug_mode,
     )
